@@ -133,14 +133,13 @@
 .btn-up {
   width: 60px;
   height: 60px;
-  opacity: 1;
   z-index: 100;
   cursor: pointer;
   background-color: darkseagreen;
-  color: white;
+  color: darkslategray;
   font-size: 35px;
   background-size: cover;
-  border: 1px solid rgb(150, 173, 110);
+  border: none;
   border-radius: 50%;
   border-radius: 50%;
   justify-content: center;
@@ -151,7 +150,7 @@
   position: fixed;
   bottom: 25px;
   right: 35px;
-  opacity: 1;
+  opacity: 0.9;
   box-shadow: 4px 4px 30px rgb(31, 41, 14);
 }
 
@@ -160,9 +159,11 @@ html {
 }
 
 .btn-up:hover {
+  opacity: 1;
   background-color: darkolivegreen;
-  border: none;
   box-shadow: none;
+  color: white;
+  transform: scale(1.2);
 }
 
 @media screen and (max-width: 675px) {
