@@ -11,9 +11,8 @@ function onError(error) {
 function emptyResponse() {
   COMMONS.loader.classList.add('visually-hidden');
   Notiflix.Notify.failure(`Упс, щось пішло не так ☠️. Введіть щось інше. `);
-  resetPageAndContainer();
-  const erorItem = `<img src="https://static.thenounproject.com/png/1269202-200.png"
-  style=" margin: 0 auto; margin-top: 75px;" alt="placeholder" width="400"/>`;
+  const erorItem = `<div style=" margin: 0 auto; margin-top: 75px; width: 1200px;"> <img src="https://static.thenounproject.com/png/1269202-200.png"
+   style=" margin: 0 auto; display: flex;" alt="placeholder" width="400"/></div>`;
   COMMONS.container.insertAdjacentHTML('beforeend', erorItem);
   return observer.unobserve(COMMONS.guard);
 }
