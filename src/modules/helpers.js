@@ -4,7 +4,9 @@ import Notiflix from 'notiflix';
 
 function noPhotoMsg() {
   COMMONS.loader.classList.add('visually-hidden');
-  Notiflix.Notify.failure(`Упс, більше ми не маємо фото по цьому запросу. `);
+  Notiflix.Notify.failure(
+    `Немає фото по даному запиту. Спробуйте знайти щось інше. `
+  );
   const erorItem = `<div style=" margin: 0 auto; margin-top: 75px; width: 1200px;"> <img src="https://static.thenounproject.com/png/1269202-200.png"
    style=" margin: 0 auto; display: flex;" alt="placeholder" width="400"/></div>`;
   return COMMONS.container.insertAdjacentHTML('beforeend', erorItem);
