@@ -7,6 +7,7 @@ import { observer } from './modules/observer';
 COMMONS.form.addEventListener('submit', onSubmit);
 
 function onSubmit(evt) {
+  COMMONS.currentPage = 1;
   evt.preventDefault();
   if (!HELPERS.isSearchQueryValid()) {
     return;

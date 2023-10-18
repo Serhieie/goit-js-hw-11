@@ -3,7 +3,7 @@ import COMMONS from '../modules/commons.js';
 import Notiflix from 'notiflix';
 
 function noPhotoMsg() {
-  COMMONS.loader.classList.add('visually-hidden');
+  hideLoader();
   Notiflix.Notify.failure(
     `Немає фото по даному запиту. Спробуйте знайти щось інше. `
   );
@@ -12,12 +12,17 @@ function noPhotoMsg() {
   return COMMONS.container.insertAdjacentHTML('beforeend', erorItem);
 }
 
+function lastPhotos() {
+  hideLoader();
+  Notiflix.Notify.success(`Це останні фото за цим пошуком!`);
+}
+
 function onError(error) {
   if (error.response.data === '[ERROR 400] "page" is out of valid range.') {
     noPhotoMsg();
     return observer.unobserve(COMMONS.guard);
   }
-  COMMONS.loader.classList.add('visually-hidden');
+  hideLoader();
   Notiflix.Notify.failure(`Загрузка неможлива, ${error} 🤷‍♂️`);
   return observer.unobserve(COMMONS.guard);
 }
@@ -26,10 +31,9 @@ function emptyResponse() {
   noPhotoMsg();
   return observer.unobserve(COMMONS.guard);
 }
-
 function successResponse(response) {
   Notiflix.Notify.success(
-    `Загрузка успішна! Завантажилося ${
+    `Загрузка успішна!Всього завантажилося ${
       response.data.hits.length * COMMONS.currentPage
     } фото`
   );
@@ -41,7 +45,7 @@ function isSearchQueryValid() {
     Notiflix.Notify.failure(`Загрузка неможлива, введіть текст`);
     resetPageAndContainer();
     const erorItem = `<img src="https://static.thenounproject.com/png/1269202-200.png"
-  style=" margin: 0 auto; margin-top: 75px;" alt="placeholder" width="400"/>`;
+  style=" margin: 0     auto; margin-top: 75px;" alt="placeholder" width="400"/>`;
     COMMONS.container.insertAdjacentHTML('beforeend', erorItem);
     return false;
   }
@@ -53,10 +57,20 @@ function resetPageAndContainer() {
   COMMONS.container.innerHTML = '';
 }
 
+function showLoader() {
+  COMMONS.loader.classList.remove('visually-hidden');
+}
+function hideLoader() {
+  COMMONS.loader.classList.add('visually-hidden');
+}
+
 export default {
   onError,
   successResponse,
   emptyResponse,
   isSearchQueryValid,
   resetPageAndContainer,
+  lastPhotos,
+  showLoader,
+  hideLoader,
 };

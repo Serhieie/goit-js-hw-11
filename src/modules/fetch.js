@@ -2,6 +2,7 @@ import axios from 'axios';
 import COMMONS from './commons.js';
 import { createMarkup } from './markup.js';
 import HELPERS from './helpers.js';
+import { observer } from './observer.js';
 
 async function getImages(page) {
   const input = COMMONS.form.elements['searchQuery'];
@@ -15,12 +16,11 @@ async function getImages(page) {
     per_page: 40,
   });
   try {
-    showLoader();
+    HELPERS.showLoader();
     const response = await fetchData(page, params);
     handleResponse(response);
     return response.data;
   } catch (error) {
-    console.log(error);
     HELPERS.onError(error);
   }
 }
@@ -35,15 +35,13 @@ function handleResponse(response) {
     HELPERS.successResponse(response);
   }
 
-  createMarkup(response.data);
-  hideLoader();
-}
+  if (response.data.totalHits <= COMMONS.currentPage * 40) {
+    observer.unobserve(COMMONS.guard);
+    HELPERS.lastPhotos();
+  }
 
-function showLoader() {
-  COMMONS.loader.classList.remove('visually-hidden');
-}
-function hideLoader() {
-  COMMONS.loader.classList.add('visually-hidden');
+  createMarkup(response.data);
+  HELPERS.hideLoader();
 }
 
 function fetchData(page, params) {
